@@ -6,7 +6,7 @@
 
 // 根据环境的不同选择包含不同的头文件
 #ifdef _WIN32	
-// 取消UNICODE的定义，不让Windwos.h使用宽字符类型
+// 取消UNICODE宏定义，不让Windwos.h使用宽字符类型
 #undef UNICODE	
 #include <Windows.h>
 #elif __linux__ || __unix__	
@@ -15,6 +15,16 @@
 #endif
 
 // 统一Windows32和Unix/Linux各平台的字符常量
+/**
+* 符号常量使用说明：
+* f_new		重写文件
+* f_exist	仅打开文件，若文件不存在则新建文件
+* f_in		读入文件
+* f_out		写入文件
+* f_cur		文件指针当前位置
+* f_set		文件指针指向文件开头
+* f_end		文件指针指向文件结尾
+*/
 #ifdef _WIN32
 #define f_new		CREATE_ALWAYS
 #define f_exist		OPEN_ALWAYS
@@ -34,6 +44,12 @@
 #endif
 
 // 统一Windows和Unix/Linux平台的字符常量
+/**
+* 符号常量功能说明：
+* OPEN_FAIL	打开文件失败，或者文件标识变量无效
+* CLOSE_SUC	关闭文件失败标识
+* SEEK_FAIL		文件指针移动失败
+*/
 #ifdef _WIN32
 #define OPEN_FAIL			INVALID_HANDLE_VALUE
 #define CLOSE_SUC		TRUE
@@ -60,42 +76,52 @@ typedef	const void *		_file_pvoid;
 #endif
 
 // 统一Windows和Linux/Unix各平台的文件IO函数接口
-#ifdef _WIN32
+#ifdef _WIN32				// Windows环境
+// 打开文件宏定义
 #define __OPEN_FILE(NAME, VISITMODE, OP)	 \
 	::CreateFile((NAME), (VISITMODE),					\
 		0, NULL, (OP), FILE_ATTRIBUTE_NORMAL,	\
 		NULL)
 // 使用内联函数对函数API进行转换，使之适应宏定义的API
 inline int __inline_WriteToFile(_file_id id, void * buffer, int size);
+inline int __inline_ReadFromFile(_file_id id, void * buffer, int size);
+// 写数据入文件宏定义
 #define __WRITE_TO_FILE(ID, BUFFER, SIZE)		\
 	::__inline_WriteToFile((ID), (BUFFER), (SIZE))
-inline int __inline_ReadFromFile(_file_id id, void * buffer, int size);
+// 从文件读数据宏定义
 #define __READ_FROM_FILE(ID, BUFFER, SIZE)	\
 	::__inline_ReadFromFile((ID), (BUFFER), (SIZE))
+// 更改文件指针宏定义
 #define __SET_POSITION_FILE(ID, ABSPOS, OFFSET) \
 	::SetFilePointer((ID), (OFFSET), NULL, (ABSPOS))
+// 关闭文件宏定义
 #define __CLOSE_FILE(ID)									\
 	::CloseHandle((ID))
-#elif __linux__ || __unix__
+#elif __linux__ || __unix__	// Unix/Linux环境
+// 打开文件宏定义
 #define __OPEN_FILE(NAME, VISITMODE, OP)	\
 	::open((NAME), (VISITMODE) | (OP))
+// 写数据入文件宏定义
 #define __WRITE_TO_FILE(ID, BUFFER, SIZE)		\
 	::write((ID), (BUFFER), (SIZE))
+// 从文件读数据宏定义
 #define __READ_FROM_FILE(ID, BUFFER, SIZE)	\
 	::read((ID), (BUFFER), (SIZE))
+// 更改文件指针宏定义
 #define __SET_POSITION_FILE(ID, ABSPOS, OFFSET) \
 	::lseek((ID), (OFFSET), (ABSPOS))
+// 关闭文件宏定义
 #define __CLOSE_FILE(ID)									\
 	::close((ID))
 #endif
 
 // 文件操作错误码
-#define NO_ERR			 0
-#define OPEN_ERR		-1
-#define CLOSE_ERR		-2
-#define READ_ERR		-3
-#define WRITE_ERR		-4
-#define SEEK_ERR		-5
+#define NO_ERR			 0		// 无错误
+#define OPEN_ERR		-1		// 打开文件错误
+#define CLOSE_ERR		-2		// 关闭文件错误
+#define READ_ERR		-3		// 读取文件错误
+#define WRITE_ERR		-4		// 写入文件错误
+#define SEEK_ERR		-5		// 更改文件指针错误
 
 class BaseFileIO {
 protected:
@@ -108,8 +134,8 @@ public:
 	BaseFileIO();
 	/* 参数：
 		fileName：文件路径
-		visitMode：访问模式（读/写）
-		op：操作方式
+		visitMode：访问模式（f_in/f_out）
+		op：打开方式（f_exist/f_new）
 	*/
 	BaseFileIO(std::string fileName, _mode_code visitMode, _mode_code op);
 	virtual ~BaseFileIO();
@@ -119,8 +145,8 @@ public:
 	* 功能：打开文件或者创建文件
 	* 参数：
 		fileName：文件路径
-		visitMode：访问模式（读/写）
-		op：操作方式
+		visitMode：访问模式（f_in/f_out）
+		op：打开方式（f_exist/f_new）
 	* 返回值：打开成功或失败
 	*/
 	bool openFile(std::string filePath, _mode_code visitMode, _mode_code op);
@@ -153,7 +179,7 @@ public:
 		offset：基于绝对位置的偏移量
 	* 返回值：移动文件指针的成功与否
 	*/
-	bool setPositionFilePointor(int absPos, int offset);
+	int setPositionFilePointor(int absPos, int offset);
 
 	/**
 	* 函数名：closeFile

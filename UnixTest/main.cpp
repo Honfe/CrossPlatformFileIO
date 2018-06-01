@@ -19,13 +19,18 @@ int main()
 
 	string res;
 	FileIn fin("allo.txt", f_in, f_exist);
+	cout << fin.getErrorMsg() << endl;
+	fin >> res;
+	cout << fin.getErrorMsg() << endl;
+	cout << res << endl;
 	cout << fout.getErrorMsg() << endl;
 	fin >> res;
 	cout << fout.getErrorMsg() << endl;
 	cout << res << endl;
 	cout << fout.getErrorMsg() << endl;
+	cout << fin.getErrorMsg() << endl;
 	fin.closeFile();
-	cout << fout.getErrorMsg() << endl;
+	cout << fin.getErrorMsg() << endl;
 
 	return 0;
 }

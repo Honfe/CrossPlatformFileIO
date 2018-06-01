@@ -29,9 +29,11 @@ BaseFileIO::~BaseFileIO()
 bool BaseFileIO::openFile(std::string filePath, _mode_code visitMode, _mode_code op)
 {
 	if ((id = __OPEN_FILE(filePath.data(), visitMode, op)) != OPEN_FAIL) {
+		err = NO_ERR;
 		return true;
 	}
 	else {
+		err = OPEN_ERR;
 		return false;
 	}
 }
@@ -41,9 +43,9 @@ int BaseFileIO::readFile(void * buffer, int type)
 	int readSize = 0;
 	eof = false;
 	if ((readSize = __READ_FROM_FILE(id, buffer, type)) >= 0) {
-		if (readSize == 0) {
+		if (readSize == 0) 
 			eof = true;
-		}
+		err = NO_ERR;
 		return readSize;
 	}
 	else {
@@ -56,6 +58,7 @@ int BaseFileIO::writeFile(void * buffer, int type)
 {
 	_file_int writtenSize = 0;
 	if ((writtenSize = __WRITE_TO_FILE(id, buffer, type)) >= 0) {
+		err = NO_ERR;
 		return writtenSize;
 	}
 	else {
@@ -64,10 +67,11 @@ int BaseFileIO::writeFile(void * buffer, int type)
 	}
 }
 
-bool BaseFileIO::setPositionFilePointor(int absPos, int offset)
+int BaseFileIO::setPositionFilePointor(int absPos, int offset)
 {
 	int pos = 0;
 	if ((pos = __SET_POSITION_FILE(id, absPos, offset)) != SEEK_FAIL) {
+		err = NO_ERR;
 		return pos;
 	}
 	else {
@@ -79,6 +83,7 @@ bool BaseFileIO::setPositionFilePointor(int absPos, int offset)
 bool BaseFileIO::closeFile()
 {
 	if (__CLOSE_FILE(id) == CLOSE_SUC) {
+		err = NO_ERR;
 		id = OPEN_FAIL;
 		return true;
 	}
