@@ -1,15 +1,16 @@
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
+#include <string>
 #include "FileIO.h"
 
 using namespace std;
 
 int main()
 {
-	string str1 = "ni zou!";
-	string res, res2;
-	FileOut fout("llo.txt", f_out, f_exist);
+	double str1 = 2.66;
+	double res, res2;
+	FileOut fout("llo.txt", f_out, f_new);
 	fout << str1;
 	fout.closeFile();
 

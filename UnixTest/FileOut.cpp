@@ -34,14 +34,14 @@ bool FileOut::isBinaryVisit()
 	return bin;
 }
 
-std::string FileOut::numToStr(int number)
+std::string FileOut::numToStr(const int number)
 {
 	std::ostringstream os;
 	os << number;
 	return os.str();
 }
 
-std::string FileOut::numToStr(double number)
+std::string FileOut::numToStr(const double number)
 {
 	std::ostringstream os;
 	os << number;
@@ -76,7 +76,7 @@ FileOut & operator<<(FileOut & fop, char & ch)
 	return fop;
 }
 
-FileOut & operator<<(FileOut & fop, std::string & str)
+FileOut & operator<<(FileOut & fop, const std::string & str)
 {
 	const char * tar = str.data();
 	char * pTemp = new char[str.size() + 1];

@@ -106,6 +106,11 @@ protected:
 public:
 	// 构造函数
 	BaseFileIO();
+	/* 参数：
+		fileName：文件路径
+		visitMode：访问模式（读/写）
+		op：操作方式
+	*/
 	BaseFileIO(std::string fileName, _mode_code visitMode, _mode_code op);
 	virtual ~BaseFileIO();
 

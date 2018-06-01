@@ -28,14 +28,14 @@ public:
 
 	friend FileOut & operator << (FileOut & fop, char & ch);
 
-	friend FileOut & operator << (FileOut & fop, std::string & str);
+	friend FileOut & operator << (FileOut & fop, const std::string & str);
 
 	bool isBinaryVisit();
 
 public:
-	std::string numToStr(int number);
+	std::string numToStr(const int number);
 
-	std::string numToStr(double number);
+	std::string numToStr(const double number);
 
 };
 
