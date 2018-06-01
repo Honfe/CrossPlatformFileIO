@@ -36,14 +36,18 @@ bool FileIn::isBinaryVisit()
 
 int FileIn::strToInt(std::string str)
 {
-	// return atoi(str.data());
-	return 0;
+	std::istringstream is(str);
+	int num;
+	is >> num;
+	return num;
 }
 
 double FileIn::strToDouble(std::string str)
 {
-	// return atof(str.data());
-	return 0.0;
+	std::istringstream is(str);
+	double num;
+	is >> num;
+	return num;
 }
 
 FileIn & operator >> (FileIn & fop, int & number)

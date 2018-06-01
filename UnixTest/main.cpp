@@ -7,13 +7,13 @@ using namespace std;
 
 int main()
 {
-	double str1 = 2.7;
-	double res, res2;
-	FileOut fout("Hello.txt", f_out, f_new | f_trunc, f_bin);
+	string str1 = "ni zou!";
+	string res, res2;
+	FileOut fout("llo.txt", f_out, f_exist);
 	fout << str1;
 	fout.closeFile();
 
-	FileIn fin("Hello.txt", f_in, f_exist, f_bin);
+	FileIn fin("llo.txt", f_in, f_exist);
 	fin >> res;
 	cout << res << endl;
 	fin.closeFile();

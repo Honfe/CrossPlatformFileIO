@@ -3,6 +3,7 @@
 
 #include <cstring>
 #include <string>
+#include <sstream>
 #include "BaseFileIO.h"
 
 #define f_bin	true

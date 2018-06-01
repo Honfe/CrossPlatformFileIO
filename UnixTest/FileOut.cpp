@@ -36,16 +36,16 @@ bool FileOut::isBinaryVisit()
 
 std::string FileOut::numToStr(int number)
 {
-	//char strNum[100];
-	//return itoa(number, strNum, 10);
-	return std::string("");
+	std::ostringstream os;
+	os << number;
+	return os.str();
 }
 
 std::string FileOut::numToStr(double number)
 {
-	//char strNum[100] = { 0 };
-	//sprintf(strNum, "%g", number);
-	return std::string("");
+	std::ostringstream os;
+	os << number;
+	return os.str();
 }
 
 FileOut & operator<<(FileOut & fop, int & number)

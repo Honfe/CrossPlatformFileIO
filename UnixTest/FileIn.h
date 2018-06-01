@@ -2,6 +2,7 @@
 #define FILEIN_H_
 
 #include <iostream>
+#include <sstream>
 #include <string>
 #include "BaseFileIO.h"
 

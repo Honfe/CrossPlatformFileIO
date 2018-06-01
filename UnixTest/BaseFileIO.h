@@ -17,21 +17,17 @@
 // 统一Windows32和Unix/Linux各平台的字符常量
 #ifdef _WIN32
 #define f_new		CREATE_ALWAYS
-#define f_exist		OPEN_EXISTING
+#define f_exist		OPEN_ALWAYS
 #define f_in			GENERIC_READ
 #define f_out		GENERIC_WRITE
-#define f_app		0x01
-#define f_trunc	CREATE_ALWAYS
 #define f_cur		FILE_CURRENT
 #define f_set		FILE_BEGIN
 #define f_end		FILE_END
 #elif __linux__ || __unix__	
-#define f_new		O_CREAT
+#define f_new		(O_CREAT | O_TRUNC)
 #define f_exist		0
 #define f_in			O_RDONLY
 #define f_out		O_WRONLY
-#define f_app		O_APPEND
-#define f_trunc	O_TRUNC
 #define f_cur		SEEK_CUR
 #define f_set		SEEK_SET
 #define f_end		SEEK_END
@@ -42,12 +38,10 @@
 #define OPEN_FAIL			INVALID_HANDLE_VALUE
 #define CLOSE_SUC		TRUE
 #define SEEK_FAIL			INVALID_SET_FILE_POINTER
-#define STR_COVER(X)	TEXT(X)
 #elif __linux__ || __unix__
 #define OPEN_FAIL			-1
 #define CLOSE_SUC		 0
 #define SEEK_FAIL			-1
-#define STR_COVER(X)	(X)
 #endif
 
 // 统一Windows和Unix/Linux各平台的变量类型名
@@ -96,7 +90,7 @@ inline int __inline_ReadFromFile(_file_id id, void * buffer, int size);
 #endif
 
 // 文件操作错误码
-#define NO_ERR			0
+#define NO_ERR			 0
 #define OPEN_ERR		-1
 #define CLOSE_ERR		-2
 #define READ_ERR		-3
