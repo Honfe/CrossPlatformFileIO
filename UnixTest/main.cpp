@@ -2,22 +2,30 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
-#include "FileIO.h"
+#include "FileIn.h"
+#include "FileOut.h"
 
 using namespace std;
 
 int main()
-{
-	double str1 = 2.66;
-	double res, res2;
-	FileOut fout("llo.txt", f_out, f_new);
-	fout << str1;
+{	
+	string res1 = "Hello World";
+	FileOut fout("allo.txt", f_out, f_exist);
+	cout << fout.getErrorMsg() << endl;
+	fout << res1;
+	cout << fout.getErrorMsg() << endl;
 	fout.closeFile();
+	cout << fout.getErrorMsg() << endl;
 
-	FileIn fin("llo.txt", f_in, f_exist);
+	string res;
+	FileIn fin("allo.txt", f_in, f_exist);
+	cout << fout.getErrorMsg() << endl;
 	fin >> res;
+	cout << fout.getErrorMsg() << endl;
 	cout << res << endl;
+	cout << fout.getErrorMsg() << endl;
 	fin.closeFile();
+	cout << fout.getErrorMsg() << endl;
 
 	return 0;
 }

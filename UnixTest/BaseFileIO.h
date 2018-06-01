@@ -25,7 +25,7 @@
 #define f_end		FILE_END
 #elif __linux__ || __unix__	
 #define f_new		(O_CREAT | O_TRUNC)
-#define f_exist		0
+#define f_exist		O_CREAT
 #define f_in			O_RDONLY
 #define f_out		O_WRONLY
 #define f_cur		SEEK_CUR
