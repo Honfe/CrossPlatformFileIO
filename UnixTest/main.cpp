@@ -9,8 +9,8 @@ using namespace std;
 
 int main()
 {	
-	string res1 = "Hello World";
-	FileOut fout("allo.txt", f_out, f_exist);
+	string res1 = "Hello";
+	FileOut fout("allo.txt", f_out, f_new);
 	cout << fout.getErrorMsg() << endl;
 	fout << res1;
 	cout << fout.getErrorMsg() << endl;
@@ -23,11 +23,10 @@ int main()
 	fin >> res;
 	cout << fin.getErrorMsg() << endl;
 	cout << res << endl;
-	cout << fout.getErrorMsg() << endl;
+	cout << fin.getErrorMsg() << endl;
 	fin >> res;
-	cout << fout.getErrorMsg() << endl;
+	cout << fin.getErrorMsg() << endl;
 	cout << res << endl;
-	cout << fout.getErrorMsg() << endl;
 	cout << fin.getErrorMsg() << endl;
 	fin.closeFile();
 	cout << fin.getErrorMsg() << endl;

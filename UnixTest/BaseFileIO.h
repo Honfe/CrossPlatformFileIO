@@ -1,3 +1,11 @@
+/**
+* FileName：BaseFileIO.h
+* Description：基本文件IO操作
+* Author：ZiQin
+* DateTime：2018-6-1
+* Version：v1.0.0
+*/
+
 #ifndef BASEFILEIO_H_
 #define BASEFILEIO_H_
 
