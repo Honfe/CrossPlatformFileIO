@@ -4,7 +4,7 @@ FileOut::FileOut()
 	: BaseFileIO()
 {
 	latestWrittenSize = 0;
-	bin = false;
+	bin = false;		// 默认字符流
 }
 
 FileOut::FileOut(std::string fileName, _mode_code visitMode, _mode_code op, bool bin)
@@ -25,6 +25,7 @@ int FileOut::getLatestWrittenSize()
 
 bool FileOut::openFile(std::string filePath, _mode_code visitMode, _mode_code op, bool bin)
 {
+	latestWrittenSize = 0;
 	this->bin = bin;
 	return BaseFileIO::openFile(filePath, visitMode, op);
 }
@@ -34,24 +35,27 @@ bool FileOut::isBinaryVisit()
 	return bin;
 }
 
-std::string FileOut::numToStr(int number)
+std::string FileOut::numToStr(const int number)
 {
-	//char strNum[100];
-	//return itoa(number, strNum, 10);
-	return std::string("");
+	// 使用sstream将整数转成字符串
+	std::ostringstream os;
+	os << number;
+	return os.str();
 }
 
-std::string FileOut::numToStr(double number)
+std::string FileOut::numToStr(const double number)
 {
-	//char strNum[100] = { 0 };
-	//sprintf(strNum, "%g", number);
-	return std::string("");
+	// 使用sstream将浮点数转成字符串
+	std::ostringstream os;
+	os << number;
+	return os.str();
 }
 
 FileOut & operator<<(FileOut & fop, int & number)
 {
+	// 根据文件访问方式进行不同的写入文件操作
 	if (fop.isBinaryVisit()) {
-		fop.writeFile(&number, sizeof(int));
+		fop.latestWrittenSize = fop.writeFile(&number, sizeof(int));
 	}
 	else {
 		fop << fop.numToStr(number);
@@ -61,8 +65,9 @@ FileOut & operator<<(FileOut & fop, int & number)
 
 FileOut & operator<<(FileOut & fop, double & number)
 {
+	// 根据文件访问方式进行不同的写入文件操作
 	if (fop.isBinaryVisit()) {
-		fop.writeFile(&number, sizeof(double));
+		fop.latestWrittenSize = fop.writeFile(&number, sizeof(double));
 	}
 	else {
 		fop << fop.numToStr(number);
@@ -72,16 +77,16 @@ FileOut & operator<<(FileOut & fop, double & number)
 
 FileOut & operator<<(FileOut & fop, char & ch) 
  {
-	fop.writeFile(&ch, sizeof(char));
+	fop.latestWrittenSize = fop.writeFile(&ch, sizeof(char));
 	return fop;
 }
 
-FileOut & operator<<(FileOut & fop, std::string & str)
+FileOut & operator<<(FileOut & fop, const std::string & str)
 {
-	const char * tar = str.data();
+	// 由于系统API参数不接受const char*类型参数，因此改成char*类型传入
 	char * pTemp = new char[str.size() + 1];
-	strcpy(pTemp, tar);
-	fop.writeFile(pTemp, sizeof(char) * str.size());
+	strcpy(pTemp, str.data());
+	fop.latestWrittenSize = fop.writeFile(pTemp, sizeof(char) * str.size());
 	delete pTemp;
 	return fop;
 }
