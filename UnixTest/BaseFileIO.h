@@ -74,13 +74,11 @@ typedef	HANDLE			_file_id;
 typedef	DWORD			_mode_code;
 typedef	LPCTSTR			_file_string;
 typedef	DWORD			_file_int;
-typedef	LPCVOID			_file_pvoid;
 #elif __linux__ || __unix__
 typedef	int					_file_id;
 typedef	int					_mode_code;
 typedef	const char *		_file_string;
 typedef	int					_file_int;
-typedef	const void *		_file_pvoid;
 #endif
 
 // 统一Windows和Linux/Unix各平台的文件IO函数接口
