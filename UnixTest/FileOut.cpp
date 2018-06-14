@@ -7,8 +7,8 @@ FileOut::FileOut()
 	bin = false;		// Ä¬ÈÏ×Ö·ûÁ÷
 }
 
-FileOut::FileOut(std::string fileName, _mode_code visitMode, _mode_code op, bool bin)
-	: BaseFileIO(fileName, visitMode, op)
+FileOut::FileOut(std::string fileName, _mode_code op, bool bin)
+	: BaseFileIO(fileName, f_out, op)
 {
 	latestWrittenSize = 0;
 	this->bin = bin;
@@ -23,11 +23,11 @@ int FileOut::getLatestWrittenSize()
 	return latestWrittenSize;
 }
 
-bool FileOut::openFile(std::string filePath, _mode_code visitMode, _mode_code op, bool bin)
+bool FileOut::openFile(std::string filePath, _mode_code op, bool bin)
 {
 	latestWrittenSize = 0;
 	this->bin = bin;
-	return BaseFileIO::openFile(filePath, visitMode, op);
+	return BaseFileIO::openFile(filePath, f_out, op);
 }
 
 bool FileOut::isBinaryVisit()

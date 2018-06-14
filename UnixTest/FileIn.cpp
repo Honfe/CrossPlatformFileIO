@@ -7,8 +7,8 @@ FileIn::FileIn()
 	bin = false;		// Ä¬ÈÏ×Ö·ûÁ÷
 }
 
-FileIn::FileIn(std::string fileName, _mode_code visitMode, _mode_code op, bool binary)
-	: BaseFileIO(fileName, visitMode, op)
+FileIn::FileIn(std::string fileName, _mode_code op, bool binary)
+	: BaseFileIO(fileName, f_in, op)
 {
 	latestReadSize = 0;
 	bin = binary;
@@ -23,11 +23,11 @@ int FileIn::getLatestReadSize()
 	return latestReadSize;
 }
 
-bool FileIn::openFile(std::string filePath, _mode_code visitMode, _mode_code op, bool binary)
+bool FileIn::openFile(std::string filePath, _mode_code op, bool binary)
 {
 	latestReadSize = 0;
 	bin = binary;
-	return BaseFileIO::openFile(filePath, visitMode, op);
+	return BaseFileIO::openFile(filePath, f_in, op);
 }
 
 bool FileIn::isBinaryVisit()

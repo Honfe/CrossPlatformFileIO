@@ -20,26 +20,26 @@ int main()
 
 	cout << endl << "Now write the data to Test1.txt and Test2.txt~" << endl;
 	// 准备写入文件，以字符流的形式
-	FileOut fout1("Test1.txt", f_out, f_new);
+	FileOut fout1("Test1.txt", f_new);
 	cout << fout1.getErrorMsg() << endl;	// 创建文件后输出错误信息，测试getErrorMsg方法
 	fout1 << a << " " << fa << " " << str1;
 	cout << fout1.getErrorCode() << endl;	// 写入数据后输出错误代码，测试getErrorCode方法
 	fout1.closeFile();
 	
 	// 准备写入文件，以字节流的形式
-	FileOut fout2("Test2.txt", f_out, f_new, f_bin);
+	FileOut fout2("Test2.txt", f_new, f_bin);
 	fout2 << a << fa << str1;
 	fout2.closeFile();
 
 	// 准备读取文件，以字符流的形式
 	cout << endl << "Now read data from Test1.txt" << endl;
-	FileIn fin1("Test1.txt", f_in, f_exist);
+	FileIn fin1("Test1.txt", f_exist);
 	fin1 >> b >> fb >> str2;
 	cout << "b = " << b << " fb = " << fb << " str2 = " << str2 << endl;
 
 	// 准备读取文件，以字节流的形式
 	cout << endl << "Now read data from Test2.txt" << endl;
-	FileIn fin2("Test2.txt", f_in, f_exist, f_bin);
+	FileIn fin2("Test2.txt", f_exist, f_bin);
 	fin2 >> c >> fc >> str3;
 	cout << "c = " << c << " fc = " << fc << " str3 = " << str3 << endl;
 	fin2.closeFile();
