@@ -69,7 +69,7 @@ FileIn & operator >> (FileIn & fop, int & number)
 	else {
 		std::string numStr;
 		fop >> numStr;
-		number = fop.strToDouble(numStr);
+		number = fop.strToInt(numStr);
 	}
 	return fop;
 }
