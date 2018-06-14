@@ -106,7 +106,7 @@ inline int __inline_ReadFromFile(_file_id id, void * buffer, int size);
 #elif __linux__ || __unix__	// Unix/Linux环境
 // 打开文件宏定义
 #define __OPEN_FILE(NAME, VISITMODE, OP)	\
-	::open((NAME), (VISITMODE) | (OP))
+	::open((NAME), (VISITMODE) | (OP), S_IRUSR | S_IWUSR | S_IXUSR)
 // 写数据入文件宏定义
 #define __WRITE_TO_FILE(ID, BUFFER, SIZE)		\
 	::write((ID), (BUFFER), (SIZE))
