@@ -37,6 +37,8 @@ bool FileIn::isBinaryVisit()
 
 int FileIn::strToInt(std::string str)
 {
+	if (str == "")
+		return 0;
 	// 使用sstream将字符串转成整数
 	std::istringstream is(str);
 	int num;
@@ -46,6 +48,8 @@ int FileIn::strToInt(std::string str)
 
 double FileIn::strToDouble(std::string str)
 {
+	if (str == "")
+		return 0.0;
 	// 使用sstream将字符串转成浮点数
 	std::istringstream is(str);
 	double num;
@@ -65,10 +69,7 @@ FileIn & operator >> (FileIn & fop, int & number)
 	else {
 		std::string numStr;
 		fop >> numStr;
-		if (numStr != "")
-			number = fop.strToDouble(numStr);
-		else
-			number = 0;	// 如果文件什么都没读进来，则默认number值为0
+		number = fop.strToDouble(numStr);
 	}
 	return fop;
 }
@@ -85,10 +86,7 @@ FileIn & operator >> (FileIn & fop, double & number)
 	else {
 		std::string strNum;
 		fop >> strNum;
-		if (strNum != "")
-			number = fop.strToDouble(strNum);
-		else
-			number = 0.0;		// 如果文件什么都没读进来，则默认number值为0
+		number = fop.strToDouble(strNum);
 	}
 	return fop;
 }
