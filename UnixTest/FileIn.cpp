@@ -58,11 +58,17 @@ FileIn & operator >> (FileIn & fop, int & number)
 	// 根据文件访问方式进行不同的读取文件操作
 	if (fop.isBinaryVisit()) {		
 		fop.latestReadSize = fop.readFile(&number, sizeof(int));
+		// 如果文件什么都没读进来，则默认number值为0
+		if (fop.latestReadSize == 0)
+			number = 0;
 	}
 	else {
 		std::string numStr;
 		fop >> numStr;
-		number = fop.strToInt(numStr);
+		if (numStr != "")
+			number = fop.strToDouble(numStr);
+		else
+			number = 0;	// 如果文件什么都没读进来，则默认number值为0
 	}
 	return fop;
 }
@@ -72,11 +78,17 @@ FileIn & operator >> (FileIn & fop, double & number)
 	// 根据文件访问方式进行不同的读取文件操作
 	if (fop.isBinaryVisit()) {
 		fop.latestReadSize = fop.readFile(&number, sizeof(double));
+		// 如果文件什么都没读进来，则默认number值为0
+		if (fop.latestReadSize == 0)
+			number = 0.0;
 	}
 	else {
 		std::string strNum;
 		fop >> strNum;
-		number = fop.strToDouble(strNum);
+		if (strNum != "")
+			number = fop.strToDouble(strNum);
+		else
+			number = 0.0;		// 如果文件什么都没读进来，则默认number值为0
 	}
 	return fop;
 }
@@ -84,6 +96,9 @@ FileIn & operator >> (FileIn & fop, double & number)
 FileIn & operator >> (FileIn & fop, char & ch)
 {
 	fop.latestReadSize = fop.readFile(&ch, sizeof(char));
+	// 如果文件什么都没读进来，则默认number值为0
+	if (fop.latestReadSize == 0)
+		ch = 0;
 	return fop;
 }
 
