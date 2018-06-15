@@ -34,7 +34,7 @@ public:
 		op：打开方式（f_exist/f_new）
 		binary：是否以字节流的形式读取文件（默认字符流）
 	*/
-	FileOut(std::string fileName, _mode_code visitMode, _mode_code op, bool bin = false);
+	FileOut(std::string fileName, _mode_code op, bool bin = false);
 	virtual ~FileOut();
 
 	/**
@@ -55,7 +55,7 @@ public:
 	binary：是否以字节流的形式读入（默认字符流）
 	* 返回值：打开成功或失败
 	*/
-	bool openFile(std::string filePath, _mode_code visitMode, _mode_code op, bool bin = false);
+	bool openFile(std::string filePath, _mode_code op, bool bin = false);
 
 	/**
 	* 友元函数：<<运算符重载
